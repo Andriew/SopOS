@@ -40,7 +40,6 @@
     <Compile Include="Modul3\ProcessManager.cs" />
     <Compile Include="Modul5\Interpreter.cs" />
     <Compile Include="Modul5\LoadProgram.cs" />
-    <Compile Include="Modul5\ProgramAssemlbyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

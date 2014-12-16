@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,35 +10,38 @@ namespace Modul3.Modul5
 {
     class LoadProgram
     {
-        public ProgramAssemlbyInfo info;
-        public Interpreter interpreter;
-        public string path;
+        private Interpreter interpreter;
+        private string filepath;
+        private string fileName;
+        private Modul3.ProcessManager processManager;
 
-        public LoadProgram(string path)
+        public LoadProgram(string path, Modul3.ProcessManager processManager)
         {
-            info = new ProgramAssemlbyInfo();
             interpreter = new Interpreter();
             this.path = path;
+            this.procesManager = processManager;
 
             this.loadProgram();
         }
 
         public void loadProgram()
         {
-            //info.paths[0] = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            filepath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            fileName = Path.GetFileName(Path.GetDirectoryName( System.Reflection.Assembly.GetExecutingAssembly().Location));
+            string outputAssemblyCode = "";
 
             StreamReader streamReader = new StreamReader(path);
             string content = streamReader.ReadToEnd();
             streamReader.Close();
 
             //tutaj startuje interpreter
-            loadAssemblyInfo(content); //zamienia assembly code na ciag [ bytow (?) ]
+            outputAssemblyCode = loadAssemblyInfo(content); //zamienia assembly code na ciag [ bytow (?) ]
 
-            //saveIntoRAM(); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
-            //loadDataToPCB(); //ladowanie danych do process control block
+            //return some address = saveIntoRAM(outputAssemblyCode); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
+            loadDataToPCB(); //ladowanie danych do process control block
         }
 
-        public void loadAssemblyInfo(string text)
+        public string loadAssemblyInfo(string text)
         {
             //text = "ADD:A:2"; //jakis test
             string outputAssemblyCode = "";
@@ -49,9 +53,15 @@ namespace Modul3.Modul5
                 splitOrder = splitAll[i].Split(':');
                 outputAssemblyCode += interpreter.translateOrder(splitOrder);
             }
+            return outputAssemblyCode;
         }
 
+        public void loadDataToPCB()
+        {
+            Modul3.Process newProcess = new Modul3.Process(processManager.processList.Count() + 1, fileName, 1); //utworzenie nowego procesu
+            processManager.processList.Add(newProcess); //dodanie procesu do listy procesow
 
+        }
 
 
 

@@ -12,21 +12,11 @@ namespace Modul3.Modul3
         int RB;
         int RC;
         int RD;
-        /*
-        public Registers()
-        {
-            this.RA = 0;
-            this.RB = 0;
-            this.RC = 0;
-            this.RD = 0;
-        }
-         */
     };
 
     class Process
     {
        
-
         /*PCB*/
         public int pid; //ostatni indeks listy + 1 
         public string proces_name; //nazwa uruchamianego programu
@@ -36,11 +26,11 @@ namespace Modul3.Modul3
         public short default_priority; //nie wiem jak to rozwiazac
         public short actual_priority;
         public byte[] page_table; // ??
-        public string[] path_to_files; //zapisanie path do pliku
+        public List<string> patchToFiles; //zapisanie path do pliku
         public int counter; //inkrementowane przez procek
 
 
-        public Process(int pid, string name, int group, short priority)
+        public Process(int pid, string name, int group)
         {
             proces_name = name;
             
@@ -49,14 +39,14 @@ namespace Modul3.Modul3
             proces_state = 0;
             process_group = group;
             registers = new Registers();
-            default_priority = priority;
-            actual_priority = priority;
+            default_priority = 4;
+            actual_priority = 4;
             //pagetable
-            //patchToFiles
+            patchToFiles = new List<string>();
             counter = 0;
         }
        
-        public Process(){ }
+       // public Process(){ }
 
 
 
