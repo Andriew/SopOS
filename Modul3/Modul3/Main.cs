@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Modul3.Modul3;
+using Modul3.Modul5;
 
 namespace Modul3
 {
@@ -10,13 +8,37 @@ namespace Modul3
     {
         static void Main(string[] args)
         {
-            //utworz processor
-            //utworz pamiec operacyjna
-            Modul3.ProcessManager procesManager = new Modul3.ProcessManager(); //utworz manager procesow
-            //utworz pamiec wirtualna
+            ProcessManager processManager;
+            try
+            {
+                //utworz processor
+                Console.WriteLine("Tutaj powinna byc inicjacja procesora");
+                //utworz pamiec operacyjna
+                Console.WriteLine("Tutaj powinna byc inicjacja pamieci operacyjnej");
+                //utworz dysk
+                Console.WriteLine("Tutaj powinna byc inicjacja dysku twardego");
+                //inicjacja proces managera
+                Console.WriteLine("Proces manager utworzony");
+                Console.ReadKey();
+                processManager = new ProcessManager(); //utworz manager procesow
 
-            string path = "C:\\Users\\Andrzej\\Desktop\\modul3\\Modul3\\Modul3\\program.txt";
-            Modul5.LoadProgram loadprogram = new Modul5.LoadProgram(path, procesManager); //zaladuj program i odrazu utworz procesy
+                //string path = "Modul3\\program.txt";
+                string path = "I:\\program.txt";
+                Console.WriteLine("Na sztywno przypisana sciezka do programu: " + path);
+
+                Console.WriteLine("Nastepuje wczytajnie programu...");
+                LoadProgram loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
+                Console.WriteLine("Proces zostal utworzony, zmiana stanu na ready\n");
+                Process p = processManager.getProcess("program.txt");
+                processManager.setProcessState(1, p);
+                p.displayPCB();
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.ReadKey();
+            }
 
 
         }

@@ -10,18 +10,16 @@ namespace Modul3.Modul5
     {
         public enum Orders : short
         {
-            LOAD = 1 << 0, //1
-            ADD = 1 << 1, //2
-            SUB = 1 << 2, //3
-            MUL = 1 << 3, //4
-            DIV = 1 << 4, //5
-            JUMP = 1 << 5, //6
-            JMPZ = 1 << 6, //7
-            JPNZ = 1 << 7, //8
-            //IN1 = '9',
-            //IN2 = '0',
-            //OUT1 = 'a',
-            BYE = 1 << 8, //256 ?
+            LOAD = 1, //1
+            ADD = 2, //2
+            SUB = 3, //3
+            MUL = 4, //4
+            DIV = 5, //5
+            JUMP = 6, //6
+            JMPZ = 7, //7
+            JPNZ = 8, //8
+            OUT = 9, //9
+            BYE = 255, //255
         };
 
         public string translateOrder(string[] order)
@@ -81,6 +79,11 @@ namespace Modul3.Modul5
                 case "BYE":
                     {
                         output += (short)Orders.BYE;
+                        break;
+                    }
+                case "OUT":
+                    {
+                        output += (short)Orders.OUT;
                         output += order[1];
                         break;
                     }

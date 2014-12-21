@@ -1,44 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using Modul3.Modul3;
 
 namespace Modul3.Modul5
 {
     class LoadProgram
     {
         private Interpreter interpreter;
-        private string filepath;
+        private string filePath;
         private string fileName;
-        private Modul3.ProcessManager processManager;
+        private ProcessManager processManager;
 
-        public LoadProgram(string path, Modul3.ProcessManager processManager)
+        public LoadProgram(string path, ProcessManager processManager)
         {
             interpreter = new Interpreter();
-            this.filepath = path;
+            this.filePath = path;
             this.processManager = processManager;
-
             this.loadProgram();
         }
 
         public void loadProgram()
         {
-            filepath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            fileName = Path.GetFileName(Path.GetDirectoryName( System.Reflection.Assembly.GetExecutingAssembly().Location));
-            string outputAssemblyCode = "";
+            try
+            {
+                fileName = Path.GetFileName(filePath);
+                filePath = Path.GetDirectoryName(filePath);
+                string outputAssemblyCode = "";
 
-            StreamReader streamReader = new StreamReader(filepath);
-            string content = streamReader.ReadToEnd();
-            streamReader.Close();
+                StreamReader streamReader = new StreamReader(filePath + fileName);
+                string content = streamReader.ReadToEnd();
+                streamReader.Close();
 
-            //tutaj startuje interpreter
-            outputAssemblyCode = loadAssemblyInfo(content); //zamienia assembly code na ciag [ bytow (?) ]
+                //tutaj startuje interpreter
+                Console.WriteLine("W tym momencie startuje interpreter...");
+                Console.ReadKey();
+                outputAssemblyCode = loadAssemblyInfo(content); //zamienia assembly code na ciag [ bytow (?) ]
+                //System.Console.WriteLine(outputAssemblyCode);
 
-            //return some address = saveIntoRAM(outputAssemblyCode); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
-            loadDataToPCB(); //ladowanie danych do process control block
+                if (outputAssemblyCode.Contains("ERROR"))
+                {
+                    throw new Exception("Wystapil blad, sekwencje anulowano!    ");
+                }
+
+                System.Console.WriteLine("Ciag rozkazow zinterpretowanych przez interpreter: " + outputAssemblyCode);
+                Console.ReadKey();
+
+                //return some address = saveIntoRAM(outputAssemblyCode); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
+                System.Console.WriteLine("Tutaj ciag rozkazow powinien zostac zapisany w pamieci operacyjnej\n");
+                loadDataToPCB(outputAssemblyCode.Length); //ladowanie danych do PCB
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public string loadAssemblyInfo(string text)
@@ -56,12 +72,16 @@ namespace Modul3.Modul5
             return outputAssemblyCode;
         }
 
-        public void loadDataToPCB()
+        public void loadDataToPCB(int tableSize)
         {
             processManager.group_tmp ++;
-            Modul3.Process newProcess = new Modul3.Process(processManager.processList.Count() + 1, fileName, processManager.group_tmp); //utworzenie nowego procesu
+            Process newProcess = new Process(processManager.processList.Count() + 1, fileName, processManager.group_tmp, tableSize); //utworzenie nowego procesu
+            Console.WriteLine("Proces jest gotowy");
+            
+            newProcess.displayPCB();
+            Console.ReadKey();
+            
             processManager.processList.Add(newProcess); //dodanie procesu do listy procesow
-
         }
 
 

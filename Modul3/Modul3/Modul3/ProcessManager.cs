@@ -22,11 +22,11 @@ namespace Modul3.Modul3
         
         
         //w przypadku gdy proces tworzy nowy proces [brak procesora]
-        public void addProcess( string name )
+        public void addProcess(string name, int tableSize)
         {
             group_tmp++;
             int pid_tmp = this.processList.Count;
-            Process newProces = new Process( ++pid_tmp, name, group_tmp );
+            Process newProces = new Process( ++pid_tmp, name, group_tmp, tableSize );
             processList.Add(newProces);
         }
 
@@ -46,14 +46,14 @@ namespace Modul3.Modul3
             }
         }
 
-        Process getProcess(string name)
+        public Process getProcess(string name)
         {
             Process lookingProcess;
             lookingProcess = processList.Find(x => x.proces_name == name );
             return lookingProcess;
         }
 
-        bool existProcess(int pid)
+        public bool existProcess(int pid)
         {
             Process lookingProcess;
             lookingProcess = processList.Find(x => x.pid == pid);
@@ -68,26 +68,22 @@ namespace Modul3.Modul3
             }
         }
 
-        void setPriority(int pid, short priority)
+        public void setPriority(int pid, short priority)
         {
             Process lookingProcess = processList.Find(x => x.pid == pid);
             lookingProcess.actual_priority = priority;
         }
 
+        public void setProcessState(short state, int pid)
+        {
+            Process lookingProcess = processList.Find(x => x.pid == pid);
+            lookingProcess.proces_state = state;
+        }
 
+        public void setProcessState(short state, Process p)
+        {
+            p.proces_state = state;
+        }
 
-        /*
-         (?) bool dodajProces(string nazwa, int t_przewidywany_next, unsigned short rozmiar);	//XC
-	    OK void usunProces(string nazwa);	//XD
-	    void stop(string nazwa);//XH
-	    void dodajPCB(Proces* nowy, bool zewnetrzny);//XI
-	    void usunPCB(Proces* doKasacji);	//XJ
-	    Proces* znajdzProces(string nazwa);	//XN
-	    string czytajKomunikat(string nazwa);	//XR
-	    void wyslijKomunikat(string nazwa, string text);// XS
-	    void uruchomProces(string nazwa);	// XY
-	    void zatrzymajProces(string nazwa);	// XZ
-         
-         */
     }
 }
