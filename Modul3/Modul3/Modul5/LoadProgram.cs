@@ -41,7 +41,7 @@ namespace Modul3.Modul5
 
                 if (outputAssemblyCode.Contains("ERROR"))
                 {
-                    throw new Exception("Wystapil blad, sekwencje anulowano!    ");
+                    throw new Exception("Wystapil blad, sekwencje anulowano!");
                 }
 
                 System.Console.WriteLine("Ciag rozkazow zinterpretowanych przez interpreter: " + outputAssemblyCode);

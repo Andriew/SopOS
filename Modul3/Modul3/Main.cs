@@ -22,14 +22,14 @@ namespace Modul3
                 Console.ReadKey();
                 processManager = new ProcessManager(); //utworz manager procesow
 
-                //string path = "Modul3\\program.txt";
-                string path = "I:\\program.txt";
+                
+                string path = "I:\\program.exe";
                 Console.WriteLine("Na sztywno przypisana sciezka do programu: " + path);
 
                 Console.WriteLine("Nastepuje wczytajnie programu...");
                 LoadProgram loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
                 Console.WriteLine("Proces zostal utworzony, zmiana stanu na ready\n");
-                Process p = processManager.getProcess("program.txt");
+                Process p = processManager.getProcess("program.exe");
                 processManager.setProcessState(1, p);
                 p.displayPCB();
                 Console.ReadKey();
