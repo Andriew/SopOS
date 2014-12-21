@@ -34,14 +34,13 @@ namespace Modul3.Modul3
         {
             proces_name = name;
             
-            //pid = getPid();
+            pid = getPid();
             proces_name = name;
             proces_state = 0;
             process_group = group;
             registers = new Registers();
             default_priority = 4;
             actual_priority = 4;
-            //pagetable
             patchToFiles = new List<string>();
             counter = 0;
         }

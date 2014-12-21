@@ -18,8 +18,8 @@ namespace Modul3.Modul5
         public LoadProgram(string path, Modul3.ProcessManager processManager)
         {
             interpreter = new Interpreter();
-            this.path = path;
-            this.procesManager = processManager;
+            this.filepath = path;
+            this.processManager = processManager;
 
             this.loadProgram();
         }
@@ -30,7 +30,7 @@ namespace Modul3.Modul5
             fileName = Path.GetFileName(Path.GetDirectoryName( System.Reflection.Assembly.GetExecutingAssembly().Location));
             string outputAssemblyCode = "";
 
-            StreamReader streamReader = new StreamReader(path);
+            StreamReader streamReader = new StreamReader(filepath);
             string content = streamReader.ReadToEnd();
             streamReader.Close();
 
@@ -58,7 +58,8 @@ namespace Modul3.Modul5
 
         public void loadDataToPCB()
         {
-            Modul3.Process newProcess = new Modul3.Process(processManager.processList.Count() + 1, fileName, 1); //utworzenie nowego procesu
+            processManager.group_tmp ++;
+            Modul3.Process newProcess = new Modul3.Process(processManager.processList.Count() + 1, fileName, processManager.group_tmp); //utworzenie nowego procesu
             processManager.processList.Add(newProcess); //dodanie procesu do listy procesow
 
         }

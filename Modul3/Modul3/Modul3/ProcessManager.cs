@@ -18,14 +18,19 @@ namespace Modul3.Modul3
          */
 
         public List<Process> processList = new List<Process>();
-
-        public void addProcess()
+        public int group_tmp;
+        
+        
+        //w przypadku gdy proces tworzy nowy proces [brak procesora]
+        public void addProcess( string name )
         {
-            Process newProces = new Process();
+            group_tmp++;
+            int pid_tmp = this.processList.Count;
+            Process newProces = new Process( ++pid_tmp, name, group_tmp );
             processList.Add(newProces);
         }
 
-        public void killProcess(int pid)
+        public void terminateProcess(int pid)
         {
             int group;
             foreach(Process x in processList)
@@ -41,9 +46,39 @@ namespace Modul3.Modul3
             }
         }
 
+        Process getProcess(string name)
+        {
+            Process lookingProcess;
+            lookingProcess = processList.Find(x => x.proces_name == name );
+            return lookingProcess;
+        }
+
+        bool existProcess(int pid)
+        {
+            Process lookingProcess;
+            lookingProcess = processList.Find(x => x.pid == pid);
+
+            if (lookingProcess != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        void setPriority(int pid, short priority)
+        {
+            Process lookingProcess = processList.Find(x => x.pid == pid);
+            lookingProcess.actual_priority = priority;
+        }
+
+
+
         /*
-         bool dodajProces(string nazwa, int t_przewidywany_next, unsigned short rozmiar);	//XC
-	    ^void usunProces(string nazwa);	//XD
+         (?) bool dodajProces(string nazwa, int t_przewidywany_next, unsigned short rozmiar);	//XC
+	    OK void usunProces(string nazwa);	//XD
 	    void stop(string nazwa);//XH
 	    void dodajPCB(Proces* nowy, bool zewnetrzny);//XI
 	    void usunPCB(Proces* doKasacji);	//XJ
