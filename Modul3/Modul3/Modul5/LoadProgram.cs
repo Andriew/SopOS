@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Modul3.Modul3;
 
 namespace Modul3.Modul5
@@ -44,11 +43,50 @@ namespace Modul3.Modul5
                     throw new Exception("Wystapil blad, sekwencje anulowano!");
                 }
 
-                System.Console.WriteLine("Ciag rozkazow zinterpretowanych przez interpreter: " + outputAssemblyCode);
+                Console.WriteLine("Ciag rozkazow zinterpretowanych przez interpreter: " + outputAssemblyCode);
                 Console.ReadKey();
 
                 //return some address = saveIntoRAM(outputAssemblyCode); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
-                System.Console.WriteLine("Tutaj ciag rozkazow powinien zostac zapisany w pamieci operacyjnej\n");
+                Console.WriteLine("Tutaj ciag rozkazow powinien zostac zapisany w pamieci operacyjnej\n");
+                loadDataToPCB(outputAssemblyCode.Length); //ladowanie danych do PCB
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void loadExe(string path, ProcessManager processManager)
+        {
+            try
+            {
+                this.filePath = path;
+                this.processManager = processManager;
+                
+                fileName = Path.GetFileName(filePath);
+                filePath = Path.GetDirectoryName(filePath);
+                string outputAssemblyCode = "";
+
+                StreamReader streamReader = new StreamReader(filePath + fileName);
+                string content = streamReader.ReadToEnd();
+                streamReader.Close();
+
+                //tutaj startuje interpreter
+                Console.WriteLine("W tym momencie startuje interpreter...");
+                Console.ReadKey();
+                outputAssemblyCode = loadAssemblyInfo(content); //zamienia assembly code na ciag [ bytow (?) ]
+                //System.Console.WriteLine(outputAssemblyCode);
+
+                if (outputAssemblyCode.Contains("ERROR"))
+                {
+                    throw new Exception("Wystapil blad, sekwencje anulowano!");
+                }
+
+                Console.WriteLine("Ciag rozkazow zinterpretowanych przez interpreter: " + outputAssemblyCode);
+                Console.ReadKey();
+
+                //return some address = saveIntoRAM(outputAssemblyCode); //tutaj powinno byc zapisanie do pamieci operacyjnej programu
+                Console.WriteLine("Tutaj ciag rozkazow powinien zostac zapisany w pamieci operacyjnej\n");
                 loadDataToPCB(outputAssemblyCode.Length); //ladowanie danych do PCB
             }
             catch (Exception e)

@@ -19,6 +19,7 @@ namespace Modul3.Modul5
             JMPZ = 7, //7
             JPNZ = 8, //8
             OUT = 9, //9
+            IN = 10, //10
             BYE = 255, //255
         };
 
@@ -84,6 +85,12 @@ namespace Modul3.Modul5
                 case "OUT":
                     {
                         output += (short)Orders.OUT;
+                        output += order[1];
+                        break;
+                    }
+                case "IN":
+                    {
+                        output += (short)Orders.IN;
                         output += order[1];
                         break;
                     }

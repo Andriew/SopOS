@@ -47,6 +47,22 @@ namespace Modul3.Modul3
             counter = 0;
         }
 
+        public Process(int pid, string name, int group, int tableSize, int priority)
+        {
+            proces_name = name;
+
+            this.pid = pid;
+            proces_name = name;
+            proces_state = 0;
+            process_group = group;
+            registers = new Registers();
+            default_priority = (short)priority;
+            actual_priority = (short)priority;
+            pageTableSize = tableSize;
+            patchToFiles = new List<string>();
+            counter = 0;
+        }
+
         public string displayRegisters()
         {
             string reg = "";
@@ -69,7 +85,7 @@ namespace Modul3.Modul3
             System.Console.WriteLine("Registers: " + this.displayRegisters() );
             System.Console.WriteLine("Default priority: " + this.default_priority);
             System.Console.WriteLine("Actual priority: " + this.actual_priority);
-            System.Console.WriteLine("Program size (table with orders code): " + this.pageTableSize);
+            System.Console.WriteLine("Program size: " + this.pageTableSize);
             System.Console.WriteLine("Memory adress : -"); //brak
             System.Console.WriteLine("Files : -"); //brak
             System.Console.WriteLine("Counter: " + this.counter);
