@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Modul3.Modul3
 {
@@ -16,10 +17,9 @@ namespace Modul3.Modul3
          */
 
         public List<Process> processList = new List<Process>();
-        public int group_tmp;
 
         //w przypadku gdy proces tworzy nowy proces [brak procesora]
-        public void addProcess(string name, int tableSize)
+        public void addProcess(string name, int tableSize, int father)
         {
             Process p = getProcess(name);
             if (p != null)
@@ -28,14 +28,23 @@ namespace Modul3.Modul3
             }
             else
             {
-                group_tmp++;
-                int pid_tmp = this.processList.Count;
-                Process newProces = new Process(++pid_tmp, name, group_tmp, tableSize);
-                processList.Add(newProces);
+                bool tmp = this.existProcess(father);
+
+                if (father == 0 || tmp == true)
+                {
+                    int pid_tmp = this.processList.Count;
+                    Process newProces = new Process(++pid_tmp, name, father, tableSize);
+                    processList.Add(newProces);
+                    Console.WriteLine("Proces zostal utworzony");
+                }
+                else
+                {
+                    Console.WriteLine("Nie istnieje proces o PID: " + father + "! Podaj innego ojca albo wpisz 0");
+                }
             }
         }
 
-        public void addProcess(string name, int tableSize, int priority)
+        public void addProcess(string name, int tableSize, int priority, int father)
         {
             Process p = getProcess(name);
             if (p != null)
@@ -44,39 +53,49 @@ namespace Modul3.Modul3
             }
             else
             {
-                group_tmp++;
-                int pid_tmp = this.processList.Count;
-                Process newProces = new Process(++pid_tmp, name, group_tmp, tableSize, priority);
-                processList.Add(newProces);
+                bool tmp = this.existProcess(father);
+
+                if (father == 0 || tmp == true)
+                {
+                    int pid_tmp = this.processList.Count;
+                    Process newProces = new Process(++pid_tmp, name, father, tableSize, priority);
+                    processList.Add(newProces);
+                    Console.WriteLine("Proces zostal utworzony");
+                }
+                else
+                {
+                    Console.WriteLine("Nie istnieje proces o PID: " + father + "! Podaj innego ojca albo wpisz 0");
+                }
             }
         }
 
         public void terminateProcess(int pid)
         {
-            Process p = getProcess(pid);
-            int group = p.process_group;
-
-            foreach (Process y in processList)
+            if (this.existProcess(pid))
             {
-                if (y.process_group == group)
-                {
-                    processList.Remove(y);
-                }
+                Process p = getProcess(pid);
+                processList.RemoveAll(x => x.process_parent == pid);
+                processList.Remove(processList.Find(x => x.pid == pid));
+                Console.WriteLine("Proces zostal usuniety");
             }
+            else
+                Console.WriteLine("Nie istnieje taki proces");
         }
 
         public void terminateProcess(string name)
         {
-            Process p = getProcess(name);
-            int group = p.process_group;
 
-            foreach (Process y in processList)
+            if (this.existProcess(name))
             {
-                if (y.process_group == group)
-                {
-                    processList.Remove(y);
-                }
+                Process p = getProcess(name);
+                int pid = p.pid;
+
+                processList.RemoveAll(x => x.process_parent == pid);
+                processList.Remove(processList.Find(x => x.pid == pid));
+                Console.WriteLine("Proces zostal usuniety");
             }
+            else
+                Console.WriteLine("Nie istnieje taki proces");
         }
 
         public Process getProcess(string name)
@@ -97,13 +116,22 @@ namespace Modul3.Modul3
             lookingProcess = processList.Find(x => x.pid == pid);
 
             if (lookingProcess != null)
-            {
                 return true;
-            }
             else
-            {
                 return false;
-            }
+
+        }
+
+        public bool existProcess(string name)
+        {
+            Process lookingProcess;
+            lookingProcess = processList.Find(x => x.proces_name == name);
+
+            if (lookingProcess != null)
+                return true;
+            else
+                return false;
+
         }
 
         public void setPriority(int pid, short priority)
@@ -114,13 +142,21 @@ namespace Modul3.Modul3
 
         public void setProcessState(short state, int pid)
         {
-            Process lookingProcess = processList.Find(x => x.pid == pid);
-            lookingProcess.proces_state = state;
+            if (state < 0 || state > 5)
+                Console.WriteLine("Proces musi byc z przedzialu 0 - 5!");
+            else
+            {
+                Process lookingProcess = processList.Find(x => x.pid == pid);
+                lookingProcess.proces_state = state;
+            }
         }
 
         public void setProcessState(short state, Process p)
         {
-            p.proces_state = state;
+            if (state < 0 || state > 5)
+                Console.WriteLine("Proces musi byc z przedzialu 0 - 5!");
+            else
+                p.proces_state = state;
         }
 
         public void displayAllProcess()
@@ -141,14 +177,26 @@ namespace Modul3.Modul3
         public void displayProcess(string name)
         {
             Process p = getProcess(name);
-            p.displayPCB();
+            if (p == null)
+            {
+                Console.WriteLine("Nie ma takiego procesu");
+            }
+            else
+            {
+                p.displayPCB();
+            }
         }
 
         public void displayProcess(int pid)
         {
             Process p = getProcess(pid);
-            p.displayPCB();
+            if (p == null)
+                Console.WriteLine("Nie ma takiego procesu");
+            else
+                p.displayPCB();
+
         }
+
 
 
 

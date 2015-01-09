@@ -112,8 +112,7 @@ namespace Modul3.Modul5
 
         public void loadDataToPCB(int tableSize)
         {
-            processManager.group_tmp ++;
-            Process newProcess = new Process(processManager.processList.Count() + 1, fileName, processManager.group_tmp, tableSize); //utworzenie nowego procesu
+            Process newProcess = new Process(processManager.processList.Count() + 1, fileName, 0, tableSize); //utworzenie nowego procesu
             Console.WriteLine("Proces jest gotowy");
             
             newProcess.displayPCB();

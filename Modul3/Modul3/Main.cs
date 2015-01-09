@@ -13,11 +13,10 @@ namespace Modul3
             {
                 int choice;
                 processManager = new ProcessManager(); //utworz manager procesow
-                
-                        //do zastanowenia:
-                        //kolejki priorytetowe i scheuler
+
                 do
                 {
+                    Console.WriteLine();
                     Console.WriteLine("1. Wyswietl liste wszystkich procesow");
                     Console.WriteLine("2. Wyswietl PCB danego procesu (po nazwie)");
                     Console.WriteLine("3. Wyswietl PCB danego procesu (po PID)");
@@ -29,220 +28,237 @@ namespace Modul3
                     Console.WriteLine("9. Usun proces (po PID)");
                     Console.WriteLine("10. Usun proces (po nazwie)");
                     Console.WriteLine("11. Usun wszystkie procesy");
+                    Console.WriteLine("0. Zakoncz");
+                    Console.WriteLine();
 
-                    choice = int.Parse( Console.ReadLine() );
-                    
-                    switch (choice)
+                    choice = int.Parse(Console.ReadLine());
+                    try
                     {
-                        case 1:
+                        switch (choice)
                         {
-                            processManager.displayAllProcess();
-                            break;
-                        }
-
-                        case 2:
-                        {
-                            Console.Write("Podaj nazwe procesu: ");
-                            string name = Console.ReadLine();
-                            processManager.displayProcess(name);
-                            break;
-                        }
-
-                        case 3:
-                        {
-                            Console.Write("Podaj PID procesu: ");
-                            int pid = int.Parse( Console.ReadLine() );
-                            processManager.displayProcess(pid);
-                            break;
-                        }
-
-                        case 4:
-                        {
-                            Console.Write("Podaj PID procesu: ");
-                            int pid = int.Parse(Console.ReadLine());
-                            bool check = processManager.existProcess(pid);
-                            if(check)
-                                processManager.displayProcess(pid);
-                            else
-                                Console.WriteLine("Proces o tym PID nie istnieje!");
-
-                            break;
-                        }
-
-                        case 5:
-                        {
-                            LoadProgram loadprogram;
-                            string path;
-
-                            Console.WriteLine("1. Wczytaj program");
-                            Console.WriteLine("2. Wczytaj program1");
-                            Console.WriteLine("3. Wczytaj program2");
-                            Console.WriteLine("4. Wczytaj program3");
-
-                            int program = int.Parse(Console.ReadLine());
-
-                            switch (program)
-                            {
-                                case 1:
+                            case 1:
                                 {
-                                    path = "program.exe";
-                                    loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
-                                    Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
-                                    Process p = processManager.getProcess("program.exe");
-                                    processManager.setProcessState(1, p);
-                                    p.displayPCB();
+                                    processManager.displayAllProcess();
+                                    break;
+                                }
+
+                            case 2:
+                                {
+                                    Console.Write("Podaj nazwe procesu: ");
+                                    string name = Console.ReadLine();
+                                    processManager.displayProcess(name);
+                                    break;
+                                }
+
+                            case 3:
+                                {
+                                    Console.Write("Podaj PID procesu: ");
+                                    int pid = int.Parse(Console.ReadLine());
+                                    processManager.displayProcess(pid);
+                                    break;
+                                }
+
+                            case 4:
+                                {
+                                    Console.Write("Podaj PID procesu: ");
+                                    int pid = int.Parse(Console.ReadLine());
+                                    bool check = processManager.existProcess(pid);
+                                    if (check)
+                                        processManager.displayProcess(pid);
+                                    else
+                                        Console.WriteLine("Proces o tym PID nie istnieje!");
 
                                     break;
                                 }
 
-                                case 2:
+                            case 5:
                                 {
-                                    path = "program1.exe";
-                                    loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
-                                    Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
-                                    Process p = processManager.getProcess("program1.exe");
-                                    processManager.setProcessState(1, p);
-                                    p.displayPCB();
+                                    LoadProgram loadprogram;
+                                    string path;
+
+                                    Console.WriteLine("1. Wczytaj program");
+                                    Console.WriteLine("2. Wczytaj program1");
+                                    Console.WriteLine("3. Wczytaj program2");
+                                    Console.WriteLine("4. Wczytaj program3");
+
+                                    int program = int.Parse(Console.ReadLine());
+
+                                    switch (program)
+                                    {
+                                        case 1:
+                                            {
+                                                path = "program.exe";
+                                                loadprogram = new LoadProgram(path, processManager);
+                                                //zaladuj program i odrazu utworz procesy
+                                                Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
+                                                Process p = processManager.getProcess("program.exe");
+                                                processManager.setProcessState(1, p);
+                                                p.displayPCB();
+                                                break;
+                                            }
+
+                                        case 2:
+                                            {
+                                                path = "program1.exe";
+                                                loadprogram = new LoadProgram(path, processManager);
+                                                //zaladuj program i odrazu utworz procesy
+                                                Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
+                                                Process p = processManager.getProcess("program1.exe");
+                                                processManager.setProcessState(1, p);
+                                                p.displayPCB();
+                                                break;
+                                            }
+                                        case 3:
+                                            {
+                                                path = "program2.exe";
+                                                loadprogram = new LoadProgram(path, processManager);
+                                                //zaladuj program i odrazu utworz procesy
+                                                Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
+                                                Process p = processManager.getProcess("program2.exe");
+                                                processManager.setProcessState(1, p);
+                                                p.displayPCB();
+
+                                                break;
+                                            }
+                                        case 4:
+                                            {
+                                                path = "program3.exe";
+                                                loadprogram = new LoadProgram(path, processManager);
+                                                //zaladuj program i odrazu utworz procesy
+                                                Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
+                                                Process p = processManager.getProcess("program3.exe");
+                                                processManager.setProcessState(1, p);
+                                                p.displayPCB();
+                                                break;
+                                            }
+
+
+                                        default:
+                                            {
+                                                Console.WriteLine("Podales zly numer");
+                                                break;
+                                            }
+                                    }
+                                    break;
+                                }
+
+                            case 6:
+                                {
+                                    Console.WriteLine("Podaj nazwe procesu: ");
+                                    string name = Console.ReadLine();
+
+                                    if (processManager.existProcess(name))
+                                    {
+                                        Console.WriteLine("Proces o podanej nazwie juz istnieje!");
+                                        break;
+                                    }
+
+                                    Console.WriteLine("Podaj wielkosc tablicy: ");
+                                    int tabSize = int.Parse(Console.ReadLine());
+
+                                    Console.WriteLine("Podaj priorytet: ");
+                                    int priority = int.Parse(Console.ReadLine());
+
+                                    Console.WriteLine("Podaj ojca procesu (jezeli proces nie ma ojca wpis 0): ");
+                                    int father = int.Parse(Console.ReadLine());
+
+                                    processManager.addProcess(name, tabSize, priority, father);
 
                                     break;
                                 }
-                                case 3:
+
+                            case 7:
                                 {
-                                    path = "program2.exe";
-                                    loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
-                                    Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
-                                    Process p = processManager.getProcess("program2.exe");
-                                    processManager.setProcessState(1, p);
-                                    p.displayPCB();
+                                    Console.WriteLine("Podaj PID procesu");
+                                    int pid = int.Parse(Console.ReadLine());
+                                    
+                                    if (!processManager.existProcess(pid))
+                                    {
+                                        Console.WriteLine("Proces o podanym PID nie istnieje!");
+                                    }
+                                    else
+                                    {
+                                        Process p = processManager.getProcess(pid);
+                                        Console.WriteLine("Podaj priorytet: ");
+                                        short priority = short.Parse(Console.ReadLine());
+                                        if (priority > 8 || priority < 1)
+                                        {
+                                            Console.WriteLine("Prioryet musi byc wartoscia od 1 do 8!");
+                                            break;
+                                        }
+                                        p.actual_priority = priority;
+                                        Console.WriteLine("Prioryet procesu zostal zmieniony");
+                                    }
 
                                     break;
                                 }
-                                case 4:
+
+                            case 8:
                                 {
-                                    path = "program3.exe";
-                                    loadprogram = new LoadProgram(path, processManager); //zaladuj program i odrazu utworz procesy
-                                    Console.WriteLine("Ilosc procesow w kolejce: " + processManager.processList.Count);
-                                    Process p = processManager.getProcess("program3.exe");
-                                    processManager.setProcessState(1, p);
-                                    p.displayPCB();
+                                    Console.WriteLine("Podaj pid procesu: ");
+                                    int pid = int.Parse(Console.ReadLine());
+                                    Process p = processManager.getProcess(pid);
+
+                                    Console.WriteLine("Podaj stan: ");
+                                    short state = short.Parse(Console.ReadLine());
+
+                                    processManager.setProcessState(state, p);
+                                    Console.WriteLine("Stan procesu zostal zmieniony: ");
+
                                     break;
                                 }
 
-
-                                default:
+                            case 9:
                                 {
-                                  Console.WriteLine("Podales zly numer");
-                                  break;  
-                                }
-                            };
-                            break;
-                        }
-
-                        case 6:
-                        {
-                            Console.WriteLine("Podaj nazwe procesu: ");
-                            string name = Console.ReadLine();
-
-                            Console.WriteLine("Podaj wielkosc tablicy: ");
-                            int tabSize = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine("Podaj priorytet: ");
-                            int priority = int.Parse(Console.ReadLine());
-
-                            processManager.addProcess(name, tabSize, priority);
-                            
-                            break;
-                        }
-
-                        case 7:
-                        {
-                            Console.WriteLine("Podaj PID procesu");
-                            int pid = int.Parse(Console.ReadLine());
-                            Process p = processManager.getProcess(pid);
-
-                            if (p == null)
-                            {
-                                Console.WriteLine("Proces o podanym PID nie istnieje!");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Podaj priorytet: ");
-                                short priority = short.Parse(Console.ReadLine());
-                                if (priority > 8 || priority < 1)
-                                {
-                                    Console.WriteLine("Prioryet musi byc wartoscia od 1 do 8!");
+                                    Console.WriteLine("Podaj PID procesu: ");
+                                    int pid = int.Parse(Console.ReadLine());
+                                    processManager.terminateProcess(pid);
                                     break;
                                 }
-                                p.actual_priority = priority;
-                                Console.WriteLine("Prioryet procesu zostal zmieniony");
-                            }
 
-                            break;
+                            case 10:
+                                {
+                                    Console.WriteLine("Podaj nazwe procesu: ");
+                                    string name = Console.ReadLine();
+                                    processManager.terminateProcess(name);
+                                    break;
+                                }
+
+                            case 11:
+                                {
+                                    processManager.processList.Clear();
+                                    Console.WriteLine("Lista procesow zostala wyczyszczona");
+                                    break;
+                                }
+
+                            ///////////////
+
+                            case 0:
+                                {
+                                    choice = 0;
+                                    break;
+                                }
+
+                            default:
+                                {
+                                    Console.WriteLine("Podales zly numer");
+                                    break;
+                                }
                         }
-
-                        case 8:
-                        {
-                            Console.WriteLine("Podaj pid procesu: ");
-                            int pid = int.Parse(Console.ReadLine());
-                            Process p = processManager.getProcess(pid);
-
-                            Console.WriteLine("Podaj stan: ");
-                            short state = short.Parse(Console.ReadLine());
-
-                            processManager.setProcessState(state, p);
-                            Console.WriteLine("Stan procesu zostal zmieniony: ");
-
-                            break;
-                        }
-
-                        case 9:
-                        {
-                            Console.WriteLine("Podaj PID procesu: ");
-                            int pid = int.Parse(Console.ReadLine());
-                            processManager.terminateProcess(pid);
-                            break;
-                        }
-
-                        case 10:
-                        {
-                            Console.WriteLine("Podaj nazwe procesu: ");
-                            string name = Console.ReadLine();
-                            processManager.terminateProcess(name);
-                            break;
-                        }
-
-                        case 11:
-                        {
-                            processManager.processList.Clear();
-                            Console.WriteLine("Lista procesow zostala wyczyszczona");
-                            break;
-                        }
-
-                        ///////////////
-
-                        case 0:
-                        {
-                            choice = 0;
-                            break;
-                        }
-
-                        default:
-                        {
-                            Console.WriteLine("Podales zly numer");
-                            break;
-                        }
-
                     }
-                
-                } while (choice != 0);
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadKey();
+                    }
 
+                } while (choice != 0);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.ReadKey();
             }
-   
         }
 
     }
