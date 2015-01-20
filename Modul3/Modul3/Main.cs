@@ -78,8 +78,8 @@ namespace Modul3
 
                                     Console.WriteLine("1. Wczytaj program");
                                     Console.WriteLine("2. Wczytaj program1");
-                                    Console.WriteLine("3. Wczytaj program2");
-                                    Console.WriteLine("4. Wczytaj program3");
+                                    //Console.WriteLine("3. Wczytaj program2");
+                                    Console.WriteLine("3. Wczytaj program3");
 
                                     int program = int.Parse(Console.ReadLine());
 
@@ -96,7 +96,7 @@ namespace Modul3
                                                 p.displayPCB();
                                                 break;
                                             }
-
+                                        
                                         case 2:
                                             {
                                                 path = "program1.exe";
@@ -108,6 +108,7 @@ namespace Modul3
                                                 p.displayPCB();
                                                 break;
                                             }
+                                        /*
                                         case 3:
                                             {
                                                 path = "program2.exe";
@@ -120,7 +121,9 @@ namespace Modul3
 
                                                 break;
                                             }
-                                        case 4:
+                                        */
+
+                                        case 3:
                                             {
                                                 path = "program3.exe";
                                                 loadprogram = new LoadProgram(path, processManager);
@@ -162,7 +165,11 @@ namespace Modul3
                                     Console.WriteLine("Podaj ojca procesu (jezeli proces nie ma ojca wpis 0): ");
                                     int father = int.Parse(Console.ReadLine());
 
-                                    processManager.addProcess(name, tabSize, priority, father);
+                                   // Process p = processManager.getProcess(father);
+                                    //if (p.is_parent || p == null)
+                                    //    Console.WriteLine("Struktura procesow pozwala tylko na jeden poziom potomkow!");
+                                   // else
+                                        processManager.addProcess(name, tabSize, priority, father);
 
                                     break;
                                 }

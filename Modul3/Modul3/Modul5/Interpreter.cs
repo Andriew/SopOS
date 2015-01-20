@@ -19,7 +19,8 @@ namespace Modul3.Modul5
             JMPZ = 7, //7
             JPNZ = 8, //8
             OUT = 9, //9
-            IN = 10, //10
+            INC = 10, //10
+            DEC = 11, //11
             BYE = 255, //255
         };
 
@@ -88,9 +89,15 @@ namespace Modul3.Modul5
                         output += order[1];
                         break;
                     }
-                case "IN":
+                case "INC":
                     {
-                        output += (short)Orders.IN;
+                        output += (short)Orders.INC;
+                        output += order[1];
+                        break;
+                    }
+                case "DEC":
+                    {
+                        output += (short)Orders.DEC;
                         output += order[1];
                         break;
                     }

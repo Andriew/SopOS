@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Modul3.Modul3
@@ -57,6 +58,15 @@ namespace Modul3.Modul3
 
                 if (father == 0 || tmp == true)
                 {
+                    if (tmp == true || father != 0)
+                    {
+                        Process pp = getProcess(father);
+                        if (pp.is_parent)
+                        {
+                            Console.WriteLine("Struktura procesow pozwala tylko na jeden poziom potomkow!");
+                            return;
+                        }
+                    }
                     int pid_tmp = this.processList.Count;
                     Process newProces = new Process(++pid_tmp, name, father, tableSize, priority);
                     processList.Add(newProces);
@@ -138,6 +148,43 @@ namespace Modul3.Modul3
         {
             Process lookingProcess = processList.Find(x => x.pid == pid);
             lookingProcess.actual_priority = priority;
+        }
+
+        public short setPriorityAtStart(int tabSize)
+        {
+            if (tabSize < 20)
+            {
+                return 1;
+            }
+            else if (tabSize >= 20 && tabSize < 60)
+            {
+                return 2;
+            }
+            else if (tabSize >= 60 && tabSize < 80)
+            {
+                return 3;
+            }
+            else if (tabSize >= 80 && tabSize < 100)
+            {
+                return 4;
+            }
+            else if (tabSize >= 120 && tabSize < 140)
+            {
+                return 5;
+            }
+            else if (tabSize >= 140 && tabSize < 160)
+            {
+                return 6;
+            }
+            else if (tabSize >= 160 && tabSize < 180)
+            {
+                return 7;
+            }
+            else
+            {
+                return 8;
+            }
+
         }
 
         public void setProcessState(short state, int pid)
