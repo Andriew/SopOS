@@ -4,3 +4,6 @@ C:\Users\Andrzej\Desktop\modul3\Modul3\Modul3\bin\Debug\Modul3.exe
 C:\Users\Andrzej\Desktop\modul3\Modul3\Modul3\bin\Debug\Modul3.pdb
 C:\Users\Andrzej\Desktop\modul3\Modul3\Modul3\obj\Debug\Modul3.exe
 C:\Users\Andrzej\Desktop\modul3\Modul3\Modul3\obj\Debug\Modul3.pdb
+I:\studia materialy\semestr3_2014\systemy operacyjne\modul3\Modul3\Modul3\bin\Debug\Modul3.exe.config
+I:\studia materialy\semestr3_2014\systemy operacyjne\modul3\Modul3\Modul3\obj\Debug\Modul3.exe
+I:\studia materialy\semestr3_2014\systemy operacyjne\modul3\Modul3\Modul3\obj\Debug\Modul3.pdb
